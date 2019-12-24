@@ -1,16 +1,19 @@
-
 import express from "express";
-const ApiRouter = express.Router();
+import url from "url";
+
+const router = express.Router();
 
 // controller injection
-import * as UserController from "../controllers/UserController";
+import * as UserController from "../controller/UserController";
 
-ApiRouter.get('/',UserController.index);
-ApiRouter.get('/2',UserController.second);
+// User routes
+router.post('/user',UserController.store);
+router.post('/user/login',UserController.login);
 
-ApiRouter.post('/create-user',UserController.store);
-ApiRouter.get('/user/:id',UserController.get);
-ApiRouter.get('/user',UserController.getAll);
+router.get('/',function(req,res){
+    console.log(req);
+    res.send(req.useragent);
+    // res.send(JSON.stringify(req));
+});
 
-ApiRouter.post('/create-user-profile',UserController.storeProfile);
-module.exports = ApiRouter;
+module.exports = router;

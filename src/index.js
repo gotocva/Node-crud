@@ -1,18 +1,30 @@
 
 
-
+import env from "./config/env";
 import app from "./config/express";
 
-// import mongoose connection
-import conn from "./config/mongoose";
+// mongoose connection
+require("./config/mongoose");
 
-// import api routes
-import ApiRouter from "./routes/api";
+const hash = (req,res,next) => {
+    req._hash = (str) => {
+        return require("crypto")
+        .createHash("sha256")
+        .update(str)
+        .digest("hex");
+    }
+    next();
+};
+app.use(hash);
 
-// import admin routes
-import AdminRouter from "./routes/admin";
+// routes injection
+app.use('/api/v1',require('./routes/api'));
 
-app.use('/api/v1',ApiRouter);
-app.use('/admin/v1',AdminRouter);
+// catch 404 and shows not found message
+app.use(function(req, res, next){
+    res.error("path not found",req.__lang().error_404,404);
+});
 
-app.listen(8000);
+app.listen(env.PORT,() => { 
+    console.log(`Application running on PORT ${env.PORT}`);
+});

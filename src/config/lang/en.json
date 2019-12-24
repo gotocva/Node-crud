@@ -1,0 +1,12 @@
+{
+    "status" : "status",
+    "success" : "success",
+    "failed" : "failed",
+    "error_404" : "404 Not found",
+    "user" : {
+        "create_error" : "Unable to create user",
+        "create_success" : "User created successfully",
+        "login_error" : "Invalid email or password",
+        "login_success" : "User logged in successfully"
+    }
+}

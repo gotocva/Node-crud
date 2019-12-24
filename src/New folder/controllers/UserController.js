@@ -45,10 +45,10 @@ export const get = (req,res) => {
             res.json({"status":true,"message":"record finded","data":result});
         }
     })
-}
+};
 
 export const getAll = (req,res) => {
-    User.find(req.query).exec((error,result) => {
+    User.find({}).populate('user_profile').exec((error,result) => {
         if(error)
         {
             res.json({"status":false,"error":error});
@@ -56,4 +56,4 @@ export const getAll = (req,res) => {
             res.json({"status":true,"message":"record finded","data":result});
         }
     })
-}
+};
